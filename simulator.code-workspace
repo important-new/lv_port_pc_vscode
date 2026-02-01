@@ -7,6 +7,9 @@
 		{
 			"path": "."
 		},
+		{
+			"path": "../../Code/barkie/firmware"
+		}
 	],
 	// extensions.json section
 	"extensions": {
