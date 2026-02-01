@@ -34,11 +34,10 @@
 		"version": "2.0.0",
 		"tasks": [
 			{
-				"label": "Build",
-				"command": "cmake",
-				"args": [
-					"--build", "${command:cmake.buildDirectory}"
-				],
+					"label": "Build",
+					"type": "shell",
+					"command": "cmd",
+					"args": ["/c","call","${workspaceFolder}\\run_vs_build.bat"],
 				"group": {
 					"kind": "build",
 					"isDefault": true
@@ -73,6 +72,19 @@
 		"version": "0.2.0",
 		"configurations": [
 			{
+				"name": "Debug LVGL demo (MSVC)",
+				"type": "cppvsdbg",
+				"request": "launch",
+				"program": "${workspaceFolder}/bin/main",
+				"args": [],
+				"cwd": "${workspaceFolder}",
+				"preLaunchTask": "Build",
+				"stopAtEntry": false,
+				"console": "integratedTerminal",
+				"visualizerFile": "",
+				"windows": {}
+			},
+			{
 				"name": "Debug LVGL demo with gdb",
 				"type": "cppdbg",
 				"request": "launch",
@@ -89,8 +101,6 @@
 					"MIMode": "lldb"
 				  },
 				  "windows": {
-					"MIMode": "gdb",
-					"miDebuggerPath": "C:\\MinGw\\bin\\gdb.exe"
 				  }
 			},
 			{

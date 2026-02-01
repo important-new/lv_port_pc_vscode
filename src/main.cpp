@@ -25,6 +25,7 @@
 #include <SDL.h>
 
 #include "hal/hal.h"
+#include "barkie_ui/DisplayUI.h"
 
 /*********************
  *      DEFINES
@@ -60,16 +61,15 @@ int main(int argc, char **argv)
   /*Initialize LVGL*/
   lv_init();
 
-  /*Initialize the HAL (display, input devices, tick) for LVGL*/
-  sdl_hal_init(320, 480);
+  /*Initialize the HAL (display, input devices, tick) for LVGL (landscape)
+   * Width and height swapped to make the simulator horizontal.
+   */
+  sdl_hal_init(320, 240);
 
-  /* Run the default demo */
-  /* To try a different demo or example, replace this with one of: */
-  /* - lv_demo_benchmark(); */
-  /* - lv_demo_stress(); */
-  /* - lv_example_label_1(); */
-  /* - etc. */
-  lv_demo_widgets();
+  /* Run the Barkie UI */
+  DisplayUI* ui = new DisplayUI();
+  ui->init();
+  ui->showMain();
 
   while(1) {
     /* Periodically call the lv_task handler.
@@ -94,4 +94,3 @@ int main(int argc, char **argv)
 /**********************
  *   STATIC FUNCTIONS
  **********************/
-

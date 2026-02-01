@@ -126,8 +126,10 @@ void lvgl_task(void *pvParameters)
     /*Initialize LVGL*/
     lv_init();
 
-    /*Initialize the HAL (display, input devices, tick) for LVGL*/
-    sdl_hal_init(320, 480);
+    /*Initialize the HAL (display, input devices, tick) for LVGL (landscape)
+     * Width and height swapped to make the simulator horizontal.
+     */
+    sdl_hal_init(320, 240);
     /* Show simple hello world screen */
     create_hello_world_screen();
 

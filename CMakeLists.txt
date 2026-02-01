@@ -69,7 +69,7 @@ add_compile_definitions($<$<BOOL:${LV_USE_FFMPEG}>:LV_USE_FFMPEG=1>)
 add_subdirectory(lvgl)
 target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS})
 
-set(MAIN_SOURCES src/mouse_cursor_icon.c src/hal/hal.c)
+set(MAIN_SOURCES src/mouse_cursor_icon.c src/hal/hal.c src/barkie_ui/DisplayUI.cpp)
 set(MAIN_LIBS lvgl lvgl::examples lvgl::demos lvgl::thorvg ${SDL2_LIBRARIES})
 
 # Create the main executable, depending on the FreeRTOS option
@@ -77,7 +77,7 @@ if(USE_FREERTOS)
     list(APPEND MAIN_SOURCES src/freertos_main.c src/freertos/freertos_posix_port.c ${FREERTOS_SOURCES})
     list(APPEND MAIN_LIBS freertos_config freertos_kernel)
 else()
-    list(APPEND MAIN_SOURCES src/main.c)
+    list(APPEND MAIN_SOURCES src/main.cpp)
 endif()
 
 
@@ -159,31 +159,33 @@ endif()
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     message(STATUS "Debug mode enabled")
 
-    target_compile_options(lvgl PRIVATE
-        -pedantic-errors
-        -Wall
-        -Wclobbered
-        -Wdeprecated
-        -Wdouble-promotion
-        -Wempty-body
-        -Wextra
-        -Wformat-security
-        -Wmaybe-uninitialized
-        # -Wmissing-prototypes
-        -Wpointer-arith
-        -Wmultichar
-        -Wno-pedantic # ignored for now, we convert functions to pointers for properties table.
-        -Wreturn-type
-        -Wshadow
-        -Wshift-negative-value
-        -Wsizeof-pointer-memaccess
-        -Wtype-limits
-        -Wundef
-        -Wuninitialized
-        -Wunreachable-code
-        -Wfloat-conversion
-        -Wstrict-aliasing
-    )
+    if(NOT MSVC)
+        target_compile_options(lvgl PRIVATE
+            -pedantic-errors
+            -Wall
+            -Wclobbered
+            -Wdeprecated
+            -Wdouble-promotion
+            -Wempty-body
+            -Wextra
+            -Wformat-security
+            -Wmaybe-uninitialized
+            # -Wmissing-prototypes
+            -Wpointer-arith
+            -Wmultichar
+            -Wno-pedantic # ignored for now, we convert functions to pointers for properties table.
+            -Wreturn-type
+            -Wshadow
+            -Wshift-negative-value
+            -Wsizeof-pointer-memaccess
+            -Wtype-limits
+            -Wundef
+            -Wuninitialized
+            -Wunreachable-code
+            -Wfloat-conversion
+            -Wstrict-aliasing
+        )
+    endif()
 
 if (ASAN)
     message(STATUS "AddressSanitizer enabled")

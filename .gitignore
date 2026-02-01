@@ -2,6 +2,9 @@
 build/
 bin/
 
+# Visual Studio generated build tree
+build_vs/
+
 # Ignore all dot folders, with below exceptions
 .*/
 
