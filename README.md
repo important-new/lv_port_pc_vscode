@@ -187,3 +187,24 @@ int main(void) {
     /* ... rest of your application ...*/
 }
 ```
+## Barkie Project Integration
+
+This simulator is integrated with the Barkie firmware project. To keep the UI code in sync, we use symbolic links.
+
+### Synchronization Setup
+
+To synchronize the `DisplayUI` files between the simulator and the firmware project, run the following command in an **Administrator** PowerShell:
+
+```powershell
+New-Item -ItemType SymbolicLink -Path "${workspaceFolder}\src\barkie_ui\DisplayUI.cpp" -Target "D:\Code\barkie\firmware\components\DisplayManager\DisplayUI.cpp"
+New-Item -ItemType SymbolicLink -Path "${workspaceFolder}\src\barkie_ui\DisplayUI.h" -Target "D:\Code\barkie\firmware\components\DisplayManager\DisplayUI.h"
+```
+
+> [!NOTE]
+> Replace `D:\Code\barkie\firmware` with your actual firmware project path if it differs.
+
+### VSCode Portability
+
+The `.vscode` configuration files use `${workspaceFolder}` to avoid absolute path issues. If you are setting up the project for the first time:
+1. Copy `.vscode/launch.json.example` to `.vscode/launch.json`.
+2. Copy `.vscode/tasks.json.example` to `.vscode/tasks.json`.
