@@ -69,7 +69,7 @@ add_compile_definitions($<$<BOOL:${LV_USE_FFMPEG}>:LV_USE_FFMPEG=1>)
 add_subdirectory(lvgl)
 target_include_directories(lvgl PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIRS})
 
-set(MAIN_SOURCES src/mouse_cursor_icon.c src/hal/hal.c src/barkie_ui/DisplayUI.cpp)
+set(MAIN_SOURCES src/mouse_cursor_icon.c src/hal/hal.c src/barkie_ui/DisplayUI.cpp src/barkie_ui/lv_font_custom_16_cjk.c)
 set(MAIN_LIBS lvgl lvgl::examples lvgl::demos lvgl::thorvg ${SDL2_LIBRARIES})
 
 # Create the main executable, depending on the FreeRTOS option
@@ -139,6 +139,10 @@ if(LVGL_PRO_PROJECT_DIR)
         "LVGL_PRO_PROJECT_DIR specified but no CMakeLists.txt found at: ${LVGL_PRO_PROJECT_DIR}"
     )
   endif()
+endif()
+
+if(MSVC)
+    add_compile_options(/utf-8)
 endif()
 
 add_executable(main ${MAIN_SOURCES})
